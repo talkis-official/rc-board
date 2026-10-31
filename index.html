@@ -1,0 +1,363 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><title>오늘의 리스트</title><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css"><style>/* 재컨택 페이지 (깃허브 페이지) 전체 스타일. 10/30 다시 짬: 카드, 탭, 이번 달 구간 그림. page.css 는 v1 로컬 HTML 용으로만 남는다 */
+:root{--bg:#f2f4f6;--card:#fff;--ink:#191f28;--ink2:#333d4b;--sub:#8b95a1;--line:#e5e8eb;
+  --pri:#2f6fdb;--pri-d:#1f4fa8;--pri-s:#eaf2ff;--amb:#e8590c;--amb-s:#fff3e8;--grn:#0f8a5f;--grn-s:#e7f6ef;--red:#d6336c;
+  --r:16px;--sh:0 1px 2px rgba(16,24,40,.05),0 1px 8px rgba(16,24,40,.04)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Pretendard Variable","Pretendard","Malgun Gothic","Apple SD Gothic Neo",sans-serif;
+  font-size:15px;line-height:1.55;-webkit-font-smoothing:antialiased;letter-spacing:-.01em}
+.wrap{max-width:680px;margin:0 auto;padding:18px 16px 56px}
+b{font-weight:700}
+
+/* 머리 */
+.top{padding:6px 2px 14px}
+.top h1{margin:0;font-size:24px;font-weight:800;letter-spacing:-.03em}.top h1 small{font-size:16px;font-weight:600;color:var(--ink2);margin-left:4px}
+.top p{margin:2px 0 0;color:var(--sub);font-size:13px}
+.seg{display:flex;background:#e4e8ee;border-radius:12px;padding:4px;margin:14px 0 4px}
+.seg button{flex:1;border:0;background:transparent;border-radius:9px;padding:10px 0;font:inherit;font-size:15px;font-weight:700;color:#6b7684;cursor:pointer}
+.seg button.on{background:#fff;color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.08)}
+
+/* 알림 줄 */
+.note{margin:10px 0;padding:12px 14px;border-radius:12px;font-size:14px;background:#fff;box-shadow:var(--sh)}
+.note.am{background:var(--pri-s);color:var(--pri-d)}
+.note.warn{background:var(--amb-s);color:#a33d06}
+.yday{margin:10px 0;padding:14px 16px;border-radius:var(--r);background:var(--card);box-shadow:var(--sh)}
+.yday .yt{font-size:14px;color:var(--ink2)}.yday .yt b{color:var(--grn)}
+.yday.nil .yt b{color:var(--amb)}
+.pb{height:8px;border-radius:4px;background:#edf0f3;margin-top:9px;overflow:hidden}.pb i{display:block;height:100%;border-radius:4px;background:var(--grn)}
+.yday.nil .pb i{background:var(--amb)}
+
+/* 요약 숫자 */
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:10px 0}
+.stats div{background:var(--card);border-radius:14px;box-shadow:var(--sh);padding:12px 14px}
+.stats b{display:block;font-size:26px;font-weight:800;line-height:1.15;letter-spacing:-.02em}.stats span{font-size:12.5px;color:var(--sub)}
+.stats div:first-child b{color:var(--amb)}
+
+.promo{margin:10px 0;padding:13px 16px;border-radius:var(--r);background:linear-gradient(0deg,var(--amb-s),var(--amb-s));border:1px solid #ffd8bd}
+.promo p{margin:2px 0 0;font-size:15px;font-weight:600;color:#7a2e05}
+.lb{display:inline-block;font-size:11.5px;font-weight:700;letter-spacing:0;color:inherit;opacity:.8;margin-right:6px}
+.promo .lb{color:var(--amb);opacity:1}
+
+/* 섹션 제목 */
+.sec{display:flex;align-items:center;gap:10px;margin:26px 2px 10px}
+.sec .n{width:24px;height:24px;border-radius:8px;background:var(--ink);color:#fff;font-size:13px;font-weight:800;display:flex;align-items:center;justify-content:center;flex:none}
+.sec h2{margin:0;font-size:17px;font-weight:800;letter-spacing:-.02em}.sec small{color:var(--sub);font-size:12.5px;font-weight:500;margin-left:2px}
+
+/* 고객 카드 */
+.card{background:var(--card);border-radius:var(--r);box-shadow:var(--sh);padding:16px 16px 14px;margin:10px 0;position:relative;transition:opacity .2s}
+.card.hot::before{content:"";position:absolute;left:0;top:14px;bottom:14px;width:4px;border-radius:0 4px 4px 0;background:var(--amb)}
+.c-top{display:flex;align-items:center;gap:10px}
+.no{width:28px;height:28px;border-radius:9px;background:var(--pri-s);color:var(--pri);font-weight:800;font-size:14px;display:flex;align-items:center;justify-content:center;flex:none}
+.id{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;min-width:0}
+.nm{font-size:18px;font-weight:800;cursor:pointer;letter-spacing:-.02em}
+.tel{font-size:14px;color:var(--sub);font-weight:600;cursor:pointer;font-variant-numeric:tabular-nums}
+.nm:hover,.tel:hover{text-decoration:underline}
+.tags{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin:8px 0 0 38px}
+.bdg{font-size:11.5px;font-weight:700;border-radius:6px;padding:2px 7px}
+.bdg.due{background:var(--amb-s);color:var(--amb)}.bdg.hi{background:var(--grn-s);color:var(--grn)}
+.when{font-size:12.5px;color:var(--sub)}
+.promise{margin:10px 0 0 38px;font-size:14px;font-weight:700;color:var(--amb)}.promise .lb{color:var(--amb)}
+.say,.bring{margin:8px 0 0 38px;border-radius:12px;padding:10px 13px}
+.say{background:var(--pri-s);color:var(--pri-d);font-size:15.5px;font-weight:700;line-height:1.5}
+.bring{background:var(--grn-s);color:#0b6b4a;font-size:14.5px;font-weight:600}
+.say .lb,.bring .lb{display:block;margin:0 0 2px}
+.card details{margin:10px 0 0 38px}.card summary{font-size:13px;color:var(--sub);cursor:pointer;list-style:none}
+.card summary::before{content:"+ "}.card details[open] summary::before{content:"- "}
+.card details p{margin:6px 0 0;font-size:14px;color:var(--ink2)}.card details p.q{color:var(--sub)}
+
+/* 걸었음 */
+label.chk{margin-left:auto;cursor:pointer;user-select:none;flex:none}
+label.chk input{position:absolute;opacity:0;pointer-events:none}
+label.chk span{display:inline-block;font-size:12.5px;font-weight:700;color:var(--sub);border:1.5px solid #d5dbe2;border-radius:999px;padding:4px 11px;background:#fff}
+label.chk input:checked+span{background:var(--grn);border-color:var(--grn);color:#fff}
+label.chk input:checked+span::before{content:"✓ "}
+.done{opacity:.45}
+
+/* 오늘 통화한 고객, 더 보기 */
+.rows{background:var(--card);border-radius:var(--r);box-shadow:var(--sh);overflow:hidden}
+.row,.mini{display:flex;align-items:center;gap:10px;padding:13px 16px;border-top:1px solid var(--line)}
+.row:first-child{border-top:0}
+.row .rt{margin-left:auto;text-align:right;font-size:13px;color:var(--ink2);white-space:nowrap}.row .rt small{display:block;color:var(--sub);font-size:11.5px}
+.row .nm,.mini .nm{font-size:16px}
+details.more{margin-top:26px;background:var(--card);border-radius:var(--r);box-shadow:var(--sh);overflow:hidden}
+details.more>summary{cursor:pointer;list-style:none;padding:14px 16px}
+details.more>summary .sec{margin:0}
+.mini{flex-wrap:wrap}.mini .id{flex:none}.mini p{margin:0;flex:1 1 100%;order:3;font-size:13.5px;color:var(--ink2)}
+.mini .w{font-size:12px;color:var(--sub)}
+.tip{margin:18px 4px 0;font-size:12.5px;color:var(--sub);text-align:center}
+.empty{margin:40px 4px;color:var(--sub);text-align:center}
+
+/* 내 이번 달 */
+.hero{background:linear-gradient(135deg,#1f4fa8,#2f6fdb);color:#fff;border-radius:20px;padding:18px 18px 16px;margin:10px 0 12px;box-shadow:0 6px 18px rgba(47,111,219,.25)}
+.hero .lb{color:#cfe0ff;opacity:1;font-size:12.5px}.hero p{margin:2px 0 0;font-size:13px;color:#dbe7ff}
+.hero .hn{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+.hero .hn div{background:rgba(255,255,255,.12);border-radius:14px;padding:11px 13px}
+.hero .hn b{font-size:30px;font-weight:800;letter-spacing:-.03em;line-height:1.1}.hero .hn small{font-size:15px;font-weight:700;margin-left:2px}
+.hero .hn span{display:block;font-size:12px;color:#dbe7ff;margin-top:2px}
+.mc{background:var(--card);border-radius:var(--r);box-shadow:var(--sh);padding:16px;margin:10px 0}
+.mc .hd{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.mc .hd h3{margin:0;font-size:16px;font-weight:800;letter-spacing:-.02em}
+.chip{font-size:12px;font-weight:700;color:var(--pri);background:var(--pri-s);border-radius:999px;padding:3px 10px;white-space:nowrap}
+.call{margin-top:4px;font-size:15px;color:var(--ink2)}.call b{color:var(--pri-d)}
+.call .big{display:block;font-size:20px;font-weight:800;color:var(--ink);letter-spacing:-.02em;margin-bottom:2px}.call .big em{font-style:normal;color:var(--amb)}
+.mgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;margin:10px 0}
+.mt{background:var(--card);border-radius:14px;box-shadow:var(--sh);padding:13px 14px}
+.mt .lb{display:block;color:var(--sub);opacity:1;margin:0 0 2px}
+.mt b{font-size:24px;font-weight:800;letter-spacing:-.02em}.mt b small{font-size:14px;margin-left:1px}
+.mt p{margin:4px 0 0;font-size:12.5px;color:var(--ink2)}.mt p em{font-style:normal;font-weight:700;color:var(--pri-d)}
+.mt .pb{height:6px;margin-top:8px}.mt .pb i{background:var(--pri)}
+.plist .pi{display:flex;gap:10px;font-size:13.5px;padding:7px 0;border-top:1px solid var(--line)}.plist .pi:first-of-type{border-top:0}
+.plist .pi span{color:var(--sub);flex:0 0 52px}.plist .pi b{margin-left:auto}
+.mfoot{color:var(--sub);font-size:12px;margin:14px 4px;line-height:1.6}
+
+/* 판매인센 금액 */
+.amt{margin:10px 0 0}.amt small{display:block;font-size:12.5px;color:var(--sub)}.amt b{font-size:30px;font-weight:800;letter-spacing:-.03em}
+/* (예전 '지금까지 쌓인 인센' 칸, 10/30 뺌) */
+.sure .tot{font-size:30px;font-weight:800;letter-spacing:-.03em;margin:6px 0 8px}
+.sure .si{display:flex;justify-content:space-between;font-size:14px;padding:7px 0;border-top:1px solid var(--line);color:var(--ink2)}
+.sure .si b{font-variant-numeric:tabular-nums}.sure .si.neg b{color:var(--red)}
+.sure .sn{margin:8px 0 0;font-size:12px;color:var(--sub);line-height:1.55}
+
+/* 구간 그림 */
+.lad{position:relative;margin:38px 2px 4px}
+.lad .tr{position:relative;height:30px;border-radius:10px;background:#edf0f3;overflow:hidden}
+.lad .sg{position:absolute;top:0;bottom:0;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;color:#fff;border-right:2px solid #fff;white-space:nowrap;overflow:hidden}
+.lad .sg.l0{background:#8fb3ef}.lad .sg.l1{background:#5f92e6}.lad .sg.l2{background:#2f6fdb}.lad .sg.l3{background:#1f4fa8}.lad .sg.l4{background:#14367a}
+.lad .sg.zero{background:#d9dee5;color:#6b7684}
+.lad .sg.fut{filter:saturate(.35) brightness(1.18);color:rgba(255,255,255,.95)}
+.lad .sg.zero.fut{filter:none}
+.lad .fill{position:absolute;left:0;top:0;bottom:0;background:linear-gradient(90deg,#5f92e6,#2f6fdb);border-radius:10px}
+.lad .pin{position:absolute;top:-34px;transform:translateX(-50%);font-style:normal;white-space:nowrap;z-index:2}
+.lad .pin b{display:block;font-size:12px;font-weight:800;background:var(--ink);color:#fff;padding:3px 9px;border-radius:8px}
+.lad .pin::after{content:"";position:absolute;left:50%;top:22px;transform:translateX(-50%);border:5px solid transparent;border-top-color:var(--ink)}
+.lad .pin::before{content:"";position:absolute;left:50%;top:30px;width:2px;height:32px;background:var(--ink);transform:translateX(-50%)}
+.lad .tks{position:relative;height:22px}.lad .tks.step{height:36px}
+.lad .tk{position:absolute;top:5px;transform:translateX(-50%);font-size:11.5px;color:var(--sub);text-align:center;line-height:1.25;font-variant-numeric:tabular-nums}
+.lad .tk em{display:block;font-style:normal;font-size:11px;color:#adb5bd}
+.lad .tk.ok{color:var(--pri-d);font-weight:800}.lad .tk.ok em{color:var(--pri)}
+
+/* 매니저 */
+.ydt{background:var(--card);border-radius:var(--r);box-shadow:var(--sh);padding:6px 16px 10px;margin:10px 0}
+.ydt .r{display:grid;grid-template-columns:64px 1fr 52px 40px;align-items:center;gap:10px;padding:8px 0;border-top:1px solid var(--line);font-size:13.5px}
+.ydt .r:first-child{border-top:0;color:var(--sub);font-size:12px}
+.ydt .r .pb{margin:0;height:7px}.ydt .r.zero{color:var(--red)}.ydt .r.zero .pb{background:#fbe4ec}
+.ydt .r.tot{font-weight:800;border-top:1.5px solid var(--ink)}
+.ydt .r span:nth-child(3),.ydt .r span:nth-child(4){text-align:right;font-variant-numeric:tabular-nums}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin:14px 0 6px}
+.chips button{border:0;background:var(--card);box-shadow:var(--sh);border-radius:10px;padding:7px 11px;font:inherit;font-size:14px;font-weight:700;cursor:pointer;color:var(--ink2)}
+.chips button small{display:block;font-size:11px;font-weight:500;color:var(--sub)}
+.chips button.on{background:var(--ink);color:#fff}.chips button.on small{color:#c5ccd6}
+.hint{font-size:11.5px;color:var(--sub);margin:2px 4px 8px}
+.one{margin-top:6px}
+
+/* 로그인 */
+.login{max-width:360px;margin:14vh auto 0;text-align:center;background:var(--card);border-radius:20px;box-shadow:var(--sh);padding:30px 24px}
+.login h1{font-size:22px;margin:0 0 6px;font-weight:800}.login p{color:var(--sub);margin:0 0 18px;font-size:14px}
+.login form{display:flex;gap:8px}
+.login input#code{flex:1;min-width:0;height:48px;border:1.5px solid #d5dbe2;border-radius:12px;padding:0 14px;font:inherit;font-size:18px;letter-spacing:1px;text-align:center}
+.login input#code:focus{outline:none;border-color:var(--pri)}
+.login button{height:48px;padding:0 20px;border:0;border-radius:12px;background:var(--pri);color:#fff;font:inherit;font-size:16px;font-weight:700;cursor:pointer}
+.login .rem{display:block;margin-top:14px;font-size:13px;color:var(--sub)}
+.login .err{margin-top:12px;min-height:20px;font-size:14px;color:var(--amb)}
+.foot{margin:34px 4px 0;text-align:center;font-size:12.5px}.foot a{color:var(--sub)}
+.copied{position:fixed;bottom:26px;left:50%;transform:translateX(-50%);background:var(--ink);color:#fff;padding:9px 18px;border-radius:10px;font-size:14px;display:none;z-index:9}
+@media (max-width:420px){.wrap{padding:14px 12px 48px}.tags,.promise,.say,.bring,.card details{margin-left:0}.stats b{font-size:23px}.hero .hn b{font-size:26px}}
+</style></head><body><div class="wrap" id="app"></div><div class="copied">복사했습니다</div><script>// 재컨택 리스트 페이지. data.json 의 항목 하나하나가 코디 한 명의 리스트이고, 그 코디의 접속코드로 잠겨 있다.
+// 코드를 받으면 브라우저 안에서 키를 만들어(PBKDF2) 풀리는 항목을 찾는다. 서버로 보내는 것은 없다.
+// 화면 두 칸: [오늘 리스트] 먼저 걸 고객, 오늘 통화한 고객, 더 보기 / [내 이번 달] 인센 구간표 위 내 위치 (그 달 규칙이 있을 때, my_month.py)
+const $ = s => document.querySelector(s);
+const E = s => String(s ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+const LS = { get(k) { try { return localStorage.getItem(k) } catch (e) { return null } }, set(k, v) { try { localStorage.setItem(k, v) } catch (e) { } }, del(k) { try { localStorage.removeItem(k) } catch (e) { } } };
+const norm = c => c.toLowerCase().replace(/[^0-9a-z]/g, '');
+const b2u = b => Uint8Array.from(atob(b), c => c.charCodeAt(0));
+const todayKST = () => new Date(Date.now() + 9 * 3600e3).toISOString().slice(0, 10);
+const nowHM = () => new Date(Date.now() + 9 * 3600e3).toISOString().slice(11, 16);
+const dlab = d => `${+d.slice(5, 7)}월 ${+d.slice(8)}일`;
+const won = n => (n || 0).toLocaleString('ko-KR') + '원';
+const man = n => (n || 0) % 10000 === 0 ? `${(n || 0) / 10000}만 원` : won(n);
+const manS = n => (n || 0) % 10000 === 0 ? `${(n || 0) / 10000}만` : won(n);
+const pct = (a, b) => b ? Math.max(0, Math.min(100, 100 * a / b)).toFixed(0) : 0;
+let DATA = null;
+
+// 오전에는 어제 리스트가 보이는 게 정상이다(오늘 리스트는 15:30). 그때는 '먼저' 칸부터 걸라고 안내한다
+const staleNote = d => nowHM() < '15:30'
+  ? `<div class="note am">${dlab(d)} 리스트입니다. 오전에는 <b>'먼저' 칸부터</b> 걸어 주세요. 오늘 리스트는 오후 3시 30분에 올라옵니다.</div>`
+  : `<div class="note warn">오늘 리스트가 아직 올라오지 않았습니다. 아래는 ${dlab(d)} 리스트입니다.</div>`;
+// 어제 '먼저' 칸을 다시 걸었나 (오늘 리스트를 볼 때만)
+const ydayNote = y => !(y && y.n) ? '' : `<div class="yday${y.called ? '' : ' nil'}"><div class="yt">`
+  + (y.called ? `${dlab(y.date)} '먼저' 고객 ${y.n}명 중 <b>${y.called}명</b>에게 다시 거셨습니다${y.won ? `. 그중 <b>${y.won}명 계약</b>` : ''}.`
+    : `${dlab(y.date)} '먼저' 고객 ${y.n}명에게 <b>아직 다시 걸지 않으셨습니다</b>. 아래 '먼저' 칸부터 걸어 주세요.`)
+  + `</div><div class="pb"><i style="width:${y.called ? pct(y.called, y.n) : 3}%"></i></div></div>`;
+
+async function load() { if (DATA) return DATA; const r = await fetch('data.json?t=' + Date.now(), { cache: 'no-store' }); DATA = await r.json(); return DATA; }
+async function unlock(code) {
+  if (!window.crypto || !crypto.subtle) throw new Error('이 브라우저에서는 열 수 없습니다. 크롬이나 엣지로 열어 주세요.');
+  const d = await load();
+  const base = await crypto.subtle.importKey('raw', new TextEncoder().encode(norm(code)), 'PBKDF2', false, ['deriveKey']);
+  const key = await crypto.subtle.deriveKey({ name: 'PBKDF2', salt: b2u(d.salt), iterations: d.iter, hash: 'SHA-256' }, base, { name: 'AES-GCM', length: 256 }, false, ['decrypt']);
+  for (const e of d.entries) {
+    try { const pt = await crypto.subtle.decrypt({ name: 'AES-GCM', iv: b2u(e.iv) }, key, b2u(e.ct)); return JSON.parse(new TextDecoder().decode(pt)); } catch (x) { }
+  }
+  return null;
+}
+
+function login(msg) {
+  $('#app').innerHTML = `<div class="login"><h1>오늘의 리스트</h1><p>받으신 접속코드를 넣어 주세요.</p>
+    <form id="f"><input id="code" autocomplete="off" spellcheck="false" placeholder="예: abcd-2345"><button>열기</button></form>
+    <label class="rem"><input type="checkbox" id="rem" checked> 이 PC에서 기억</label><div class="err">${E(msg || '')}</div></div>`;
+  $('#code').focus();
+  $('#f').onsubmit = async e => {
+    e.preventDefault(); const c = $('#code').value; if (!norm(c)) return;
+    $('.err').textContent = '여는 중입니다';
+    let p = null; try { p = await unlock(c); } catch (x) { $('.err').textContent = x.message; return; }
+    if (!p) { $('.err').textContent = '코드가 맞지 않습니다. 다시 확인해 주세요.'; return; }
+    if ($('#rem').checked) LS.set('rc-code', c);
+    show(p);
+  };
+}
+
+// ── 오늘 리스트 ──
+const chk = '<label class="chk"><input type="checkbox"><span>걸었음</span></label>';
+const who = x => `<div class="id"><span class="nm" title="눌러서 이름 복사">${E(x.name || '이름 없음')}</span><span class="tel" title="눌러서 뒤 4자리 복사">${E(x.tel)}</span></div>`;
+const sec = (n, t, s) => `<div class="sec"><span class="n">${n}</span><h2>${t}</h2>${s ? `<small>${s}</small>` : ''}</div>`;
+const card = (n, x) => `<article class="card${x.due || x.missed ? ' hot' : ''}" data-k="c${E(x.k)}">
+  <div class="c-top"><span class="no">${n}</span>${who(x)}${chk}</div>
+  <div class="tags">${x.due ? '<span class="bdg due">약속일</span>' : x.missed ? '<span class="bdg due">약속 지남</span>' : ''}${x.chance === '상' ? '<span class="bdg hi">가능성 높음</span>' : ''}<span class="when">${E(x.when)} ${E(x.t)}, 통화 ${x.min}분</span></div>
+  ${x.promise ? `<div class="promise"><span class="lb">약속</span>${E(x.promise)}</div>` : ''}
+  ${x.opener ? `<div class="say"><span class="lb">첫마디</span>${E(x.opener)}</div>` : ''}
+  ${x.bring ? `<div class="bring"><span class="lb">가져갈 것</span>${E(x.bring)}</div>` : ''}
+  ${x.summary ? `<details><summary>지난 통화 보기</summary><p>${E(x.summary)}</p>${x.quote ? `<p class="q">"${E(x.quote)}"</p>` : ''}</details>` : ''}
+</article>`;
+const trow = x => `<div class="row" data-k="t${E(x.k)}">${who(x)}<div class="rt">${E(x.t)}, ${x.min}분<small>받은 번호 ${E(x.iv)}</small></div>${chk}</div>`;
+const mini = x => `<div class="mini" data-k="m${E(x.k)}">${who(x)}<span class="w">${E(x.when)}, ${x.min}분</span>${chk}<p>${E(x.opener || x.summary || '')}</p></div>`;
+
+function listView(p) {
+  const f = p.first || [], t = p.today || [], m = p.more || [];
+  let h = p.date !== todayKST() ? staleNote(p.date) : ydayNote(p.yday);
+  h += `<div class="stats"><div><b>${f.length}</b><span>먼저 걸 고객</span></div><div><b>${t.length}</b><span>오늘 통화한 고객</span></div><div><b>${m.length}</b><span>더 보기</span></div></div>`;
+  if (!f.length && !t.length && !m.length) return h + '<div class="empty">오늘 리스트에 넣을 고객이 없습니다.</div>';
+  if (p.promo) h += `<div class="promo"><span class="lb">오늘 프로모션</span><p>${E(p.promo)}</p></div>`;
+  if (f.length) h += sec(1, '먼저 걸 고객', '약속한 날이 됐거나 계약 가능성이 높은 고객') + f.map((x, i) => card(i + 1, x)).join('');
+  if (t.length) h += sec(2, '오늘 통화한 고객', '3분 넘게 통화, 아직 계약 전') + `<div class="rows">${t.map(trow).join('')}</div>`;
+  if (m.length) h += `<details class="more"><summary>${sec(3, '더 보기', `${m.length}명, 시간이 남으면`)}</summary>${m.map(mini).join('')}</details>`;
+  return h + '<p class="tip">이름이나 번호 뒤 4자리를 누르면 복사됩니다. CMS에서 찾아 걸어 주세요.</p>';
+}
+
+function bind(p, root) {
+  const KEY = `rc-st-${p.date}-${p.agent}`; let st = {};
+  try { st = JSON.parse(LS.get(KEY) || '{}') } catch (e) { }
+  root.querySelectorAll('[data-k]').forEach(el => {
+    const b = el.querySelector('input[type=checkbox]'); if (!b) return;
+    b.checked = !!st[el.dataset.k]; el.classList.toggle('done', b.checked);
+    b.addEventListener('change', () => { st[el.dataset.k] = b.checked; el.classList.toggle('done', b.checked); LS.set(KEY, JSON.stringify(st)); });
+  });
+  const copy = v => { try { navigator.clipboard.writeText(v) } catch (e) { } const c = $('.copied'); c.style.display = 'block'; setTimeout(() => c.style.display = 'none', 1200); };
+  root.querySelectorAll('.nm').forEach(t => t.addEventListener('click', () => copy(t.textContent.trim())));
+  root.querySelectorAll('.tel').forEach(t => t.addEventListener('click', () => copy(t.textContent.trim().slice(-4))));
+}
+
+// ── 내 이번 달 ──
+// 구간표 그림: 공지의 구간(또는 단계)을 막대로 놓고 지금 위치에 핀을 찍는다
+// kind 'rate' = 판매인센(구간마다 1점당 금액, 칸 안에 표시) / 'step' = 계약 수(그 건수에 닿으면 받는 금액, 눈금 아래 표시)
+function ladder(v, stops, kind, unit) {
+  if (!stops || !stops.length) return '';
+  const last = stops[stops.length - 1].at, max = Math.max(last * 1.18, v * 1.08, last + 8);
+  const X = x => Math.max(0, Math.min(100, 100 * x / max)).toFixed(1);
+  let h = '<div class="lad"><div class="tr">';
+  if (kind === 'rate') {
+    const seg = [];
+    if (stops[0].at > 0) seg.push({ lo: 0, hi: stops[0].at, lab: '0원', z: true });
+    stops.forEach((st, i) => seg.push({ lo: st.at, hi: i + 1 < stops.length ? stops[i + 1].at : max, lab: manS(st.rate), i }));
+    seg.forEach(g => {
+      const st = v >= g.hi ? 'done' : v >= g.lo ? 'cur' : 'fut';
+      h += `<span class="sg ${g.z ? 'zero' : 'l' + Math.min(4, g.i)} ${st}" style="left:${X(g.lo)}%;width:${(X(g.hi) - X(g.lo)).toFixed(1)}%">${g.lab}</span>`;
+    });
+  } else {
+    h += `<span class="fill" style="width:${X(v)}%"></span>`;
+  }
+  h += `</div><i class="pin" style="left:${X(v)}%"><b>지금 ${v}${unit}</b></i><div class="tks ${kind}">`;
+  stops.forEach(st => { h += `<span class="tk${v >= st.at ? ' ok' : ''}" style="left:${X(st.at)}%">${st.at}${kind === 'step' && st.amount != null ? `<em>${manS(st.amount)}</em>` : ''}</span>`; });
+  return h + '</div></div>';
+}
+const mt = (lb, n, unit, txt, ratio) => `<div class="mt"><span class="lb">${E(lb)}</span><b>${n}<small>${unit}</small></b><p>${txt}</p>`
+  + (ratio != null ? `<div class="pb"><i style="width:${Math.max(4, ratio).toFixed(0)}%"></i></div>` : '') + '</div>';
+
+function monthView(m) {
+  // 금액은 판매인센 구간에만 (사용자 결정 10/30). 금액 = 지금 포인트를 이번 달 공지 구간표에 넣은 값 (my_month.py)
+  const s = m.sale || {};
+  let h = `<section class="hero"><span class="lb">${+m.ym.slice(5)}월 내 성과</span><p>${dlab(m.upto)}까지 들어온 계약, 남은 영업일 ${m.days_left}일 (오늘 포함)</p><div class="hn">`
+    + `<div><b>${m.contracts}</b><small>건</small><span>이번 달 계약${m.cancels ? ` (취소 ${m.cancels}건 뺌)` : ''}</span></div>`
+    + `<div><b>${m.points}</b><small>점</small><span>판매인센 포인트${s.newbie ? ', 신입 기간' : ''}</span></div></div></section>`;
+  if (s.newbie) {
+    h += `<div class="mc"><div class="hd"><h3>판매인센</h3><span class="chip">신입 기간</span></div>`
+      + `<div class="amt"><small>지금까지 판매인센</small><b>${won(s.amount)}</b></div><div class="call">신입 기간이라 구간 없이 1점에 <b>${won(s.rate)}</b>입니다.</div></div>`;
+  } else if (s.ladder) {
+    const n = s.next;
+    const call = n ? `<span class="big">다음 구간까지 <em>${n.need_pts}점</em> (계약 약 ${n.need_ct}건)</span>${n.at}점부터는 1점에 <b>${won(n.rate)}</b>입니다.`
+      : `<span class="big">가장 높은 구간입니다</span>1점에 <b>${won(s.rate)}</b>입니다.`;
+    h += `<div class="mc"><div class="hd"><h3>판매인센 구간</h3><span class="chip">${s.rate ? `지금 1점에 ${won(s.rate)}` : '아직 0원 구간'}</span></div>`
+      + `<div class="amt"><small>지금까지 판매인센</small><b>${won(s.amount)}</b></div>`
+      + ladder(m.points || 0, s.ladder, 'rate', '점') + `<div class="call">${call}</div></div>`;
+  }
+  // 아래 칸들은 금액 없이 건수만 (금액은 판매인센 구간에만)
+  const c = m.count;
+  if (c) {
+    const call = c.next ? `<span class="big"><em>${c.next.need}건</em> 더 하면 ${c.next.at}건</span>다음 단계까지 남은 건수입니다.` : '<span class="big">가장 높은 단계입니다</span>';
+    h += `<div class="mc"><div class="hd"><h3>계약 수 보너스</h3><span class="chip">${c.basis} 계약 ${c.n}건</span></div>` + ladder(c.n, c.ladder, 'step', '건') + `<div class="call">${call}</div></div>`;
+  }
+  let g = '';
+  if (m.recall) { const r = m.recall; g += mt('재콜 계약', r.n, '건', `${r.per}건마다 지급. 다음까지 <em>${r.need}건</em>`, 100 * (r.per - r.need) / r.per); }
+  (m.lang || []).forEach(l => { g += mt(`${l.label} 계약`, l.n, '건', `${l.per}건마다 지급. 다음까지 <em>${l.need}건</em>`, 100 * (l.per - l.need) / l.per); });
+  if (m.brainkey) g += mt('브레인키 가입', m.brainkey.acc, '건', `이번 달 계약 중 혜택지급 ${m.brainkey.reg}건, 가입 <em>${m.brainkey.acc}건</em>`, null);
+  if (g) h += `<div class="mgrid">${g}</div>`;
+  return h + '<p class="mfoot">어제까지 들어온 계약 기준입니다. 이번 달 안에 취소되면 줄어듭니다. 구간은 이번 달 인센 공지 그대로이고, 실제 지급액은 급여 정산 때 정해집니다.</p>';
+}
+
+// ── 화면 ──
+const segBar = (v, lab2) => `<div class="seg"><button data-v="list"${v === 'list' ? ' class="on"' : ''}>오늘 리스트</button><button data-v="month"${v === 'month' ? ' class="on"' : ''}>${lab2 || '내 이번 달'}</button></div>`;
+const foot = () => '<div class="foot"><a href="#" id="out">다른 코드로 열기</a></div>';
+function show(p, view) {
+  if (p.manager) return manager(p);
+  const v = p.month && view === 'month' ? 'month' : 'list';
+  $('#app').innerHTML = `<div class="top"><h1>${E(p.agent)}<small>코디님</small></h1><p>${dlab(p.date)} ${E((p.made || '').slice(11))} 기준</p>${p.month ? segBar(v) : ''}</div>`
+    + (v === 'month' ? monthView(p.month) : listView(p)) + foot();
+  if (v === 'list') bind(p, $('#app'));
+  bindOut();
+  document.querySelectorAll('.seg button').forEach(b => b.onclick = () => { show(p, b.dataset.v); window.scrollTo(0, 0); });
+}
+function manager(p) {
+  const L = p.lists || {}, names = Object.keys(L);
+  let h = `<div class="top"><h1>매니저</h1><p>${dlab(p.date)} 재컨택, ${E((p.made || '').slice(11))} 기준</p></div>`;
+  if (p.date !== todayKST()) h += staleNote(p.date);
+  const Y = names.filter(a => L[a].yday && L[a].yday.n);
+  if (p.date === todayKST() && Y.length) {
+    const sum = k => Y.reduce((s, a) => s + (L[a].yday[k] || 0), 0);
+    const r = (a, n, c, w, cls) => `<div class="r ${cls}"><span>${a}</span><div class="pb"><i style="width:${c ? pct(c, n) : 0}%"></i></div><span>${c}/${n}</span><span>${w || ''}</span></div>`;
+    h += `<div class="ydt"><div class="r"><span>코디</span><span>${dlab(L[Y[0]].yday.date)} '먼저' 다시 건 고객</span><span>다시 건</span><span>계약</span></div>`
+      + Y.map(a => { const y = L[a].yday; return r(E(a), y.n, y.called, y.won, y.called ? '' : 'zero'); }).join('')
+      + r('합계', sum('n'), sum('called'), sum('won'), 'tot') + '</div>'
+      + '<div class="hint">다시 건 = 리스트를 올린 뒤 어제 저녁부터 지금까지 한 번이라도 건 고객. 어제 저녁 통화는 녹취 기록으로 세서 조금 적게 잡힐 수 있습니다.</div>';
+  }
+  h += '<div class="chips">' + names.map(a => `<button data-a="${E(a)}">${E(a)}<small>${(L[a].first || []).length} / ${(L[a].today || []).length} / ${(L[a].more || []).length}</small></button>`).join('')
+    + '</div><div class="hint">먼저 / 오늘 / 더 보기</div><div id="one" class="one"></div>' + foot();
+  $('#app').innerHTML = h; bindOut();
+  // 코디를 고르면 그 코디가 보는 화면 그대로. '내 이번 달'이 있으면 매니저도 같은 탭으로 본다
+  const pick = (a, v) => {
+    document.querySelectorAll('.chips button').forEach(b => b.classList.toggle('on', b.dataset.a === a));
+    const q = L[a], mv = q.month && v === 'month';
+    $('#one').innerHTML = (q.month ? segBar(mv ? 'month' : 'list', `${E(a)} 이번 달`) : '') + (mv ? monthView(q.month) : listView(q));
+    if (!mv) bind(q, $('#one'));
+    $('#one').querySelectorAll('.seg button').forEach(b => b.onclick = () => pick(a, b.dataset.v));
+  };
+  document.querySelectorAll('.chips button').forEach(b => b.onclick = () => pick(b.dataset.a));
+  if (names.length) pick(names[0]);
+}
+function bindOut() { const o = $('#out'); if (o) o.onclick = e => { e.preventDefault(); LS.del('rc-code'); login(); }; }
+
+(async () => {
+  if (window.__PREVIEW) return show(window.__PREVIEW, window.__PREVIEW_VIEW);     // 로컬 미리보기 전용 (배포 페이지에는 없다)
+  const c = LS.get('rc-code');
+  if (!c) return login();
+  try { const p = await unlock(c); p ? show(p) : (LS.del('rc-code'), login('코드가 바뀌었습니다. 새 코드를 넣어 주세요.')); }
+  catch (x) { login(x.message || '불러오지 못했습니다. 새로고침해 주세요.'); }
+})();
+</script></body></html>
