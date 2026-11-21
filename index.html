@@ -1,0 +1,565 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><title>오늘의 리스트</title><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css"><style>/* 재컨택 페이지 (깃허브 페이지) 전체 스타일. 10/30 다시 짬: 카드, 탭, 이번 달 구간 그림. page.css 는 v1 로컬 HTML 용으로만 남는다 */
+:root{--bg:#f2f4f6;--card:#fff;--ink:#191f28;--ink2:#333d4b;--sub:#8b95a1;--line:#e5e8eb;
+  --pri:#2f6fdb;--pri-d:#1f4fa8;--pri-s:#eaf2ff;--amb:#e8590c;--amb-s:#fff3e8;--grn:#0f8a5f;--grn-s:#e7f6ef;--red:#d6336c;
+  --r:16px;--sh:0 1px 2px rgba(16,24,40,.05),0 1px 8px rgba(16,24,40,.04)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Pretendard Variable","Pretendard","Malgun Gothic","Apple SD Gothic Neo",sans-serif;
+  font-size:15px;line-height:1.55;-webkit-font-smoothing:antialiased;letter-spacing:-.01em}
+.wrap{max-width:680px;margin:0 auto;padding:18px 16px 56px}
+b{font-weight:700}
+
+/* 머리 */
+.top{padding:6px 2px 14px}
+.top h1{margin:0;font-size:24px;font-weight:800;letter-spacing:-.03em}.top h1 small{font-size:16px;font-weight:600;color:var(--ink2);margin-left:4px}
+.top p{margin:2px 0 0;color:var(--sub);font-size:13px}
+.seg{display:flex;background:#e4e8ee;border-radius:12px;padding:4px;margin:14px 0 4px}
+.seg button{flex:1;border:0;background:transparent;border-radius:9px;padding:10px 0;font:inherit;font-size:15px;font-weight:700;color:#6b7684;cursor:pointer}
+.seg button.on{background:#fff;color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.08)}
+
+/* 알림 줄 */
+.note{margin:10px 0;padding:12px 14px;border-radius:12px;font-size:14px;background:#fff;box-shadow:var(--sh)}
+.note.am{background:var(--pri-s);color:var(--pri-d)}
+.note.warn{background:var(--amb-s);color:#a33d06}
+.yday{margin:10px 0;padding:14px 16px;border-radius:var(--r);background:var(--card);box-shadow:var(--sh)}
+.yday .yt{font-size:14px;color:var(--ink2)}.yday .yt b{color:var(--grn)}
+.yday.nil .yt b{color:var(--amb)}
+.pb{height:8px;border-radius:4px;background:#edf0f3;margin-top:9px;overflow:hidden}.pb i{display:block;height:100%;border-radius:4px;background:var(--grn)}
+.yday.nil .pb i{background:var(--amb)}
+
+/* 요약 숫자 */
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:10px 0}
+.stats div{background:var(--card);border-radius:14px;box-shadow:var(--sh);padding:12px 14px}
+.stats b{display:block;font-size:26px;font-weight:800;line-height:1.15;letter-spacing:-.02em}.stats span{font-size:12.5px;color:var(--sub)}
+.stats div:first-child b{color:var(--amb)}
+
+.promo{margin:10px 0;padding:13px 16px;border-radius:var(--r);background:linear-gradient(0deg,var(--amb-s),var(--amb-s));border:1px solid #ffd8bd}
+.promo p{margin:2px 0 0;font-size:15px;font-weight:600;color:#7a2e05}
+.lb{display:inline-block;font-size:11.5px;font-weight:700;letter-spacing:0;color:inherit;opacity:.8;margin-right:6px}
+.promo .lb{color:var(--amb);opacity:1}
+
+/* 섹션 제목 */
+.sec{display:flex;align-items:center;gap:10px;margin:26px 2px 10px}
+.sec .n{width:24px;height:24px;border-radius:8px;background:var(--ink);color:#fff;font-size:13px;font-weight:800;display:flex;align-items:center;justify-content:center;flex:none}
+.sec h2{margin:0;font-size:17px;font-weight:800;letter-spacing:-.02em}.sec small{color:var(--sub);font-size:12.5px;font-weight:500;margin-left:2px}
+
+/* 고객 카드 */
+.card{background:var(--card);border-radius:var(--r);box-shadow:var(--sh);padding:16px 16px 14px;margin:10px 0;position:relative;transition:opacity .2s}
+.card.hot::before{content:"";position:absolute;left:0;top:14px;bottom:14px;width:4px;border-radius:0 4px 4px 0;background:var(--amb)}
+.c-top{display:flex;align-items:center;gap:10px}
+.no{width:28px;height:28px;border-radius:9px;background:var(--pri-s);color:var(--pri);font-weight:800;font-size:14px;display:flex;align-items:center;justify-content:center;flex:none}
+.id{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;min-width:0}
+.nm{font-size:18px;font-weight:800;cursor:pointer;letter-spacing:-.02em}
+.tel{font-size:14px;color:var(--sub);font-weight:600;cursor:pointer;font-variant-numeric:tabular-nums}
+.nm:hover,.tel:hover{text-decoration:underline}
+.tags{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin:8px 0 0 38px}
+.bdg{font-size:11.5px;font-weight:700;border-radius:6px;padding:2px 7px}
+.bdg.due{background:var(--amb-s);color:var(--amb)}.bdg.hi{background:var(--grn-s);color:var(--grn)}
+.bdg.tb{background:#12915a;color:#fff;flex:none}.bdg.tb::before{content:"★ "}
+/* 지난 통화: 처음부터 펼쳐 보인다 (2026-11-12) */
+.prev{margin:10px 0 0 38px;border-left:3px solid var(--line);padding:2px 0 2px 12px}
+.prev .lb{display:block;margin:0 0 2px}
+.prev p{margin:0;font-size:14.5px;color:var(--ink2);line-height:1.6}.prev p.q{margin-top:4px;color:var(--sub);font-size:13.5px}
+.mini p.op{color:var(--sub);font-size:13px}
+.when{font-size:12.5px;color:var(--sub)}
+.promise{margin:10px 0 0 38px;font-size:14px;font-weight:700;color:var(--amb)}.promise .lb{color:var(--amb)}
+.say,.bring{margin:8px 0 0 38px;border-radius:12px;padding:10px 13px}
+.say{background:var(--pri-s);color:var(--pri-d);font-size:15.5px;font-weight:700;line-height:1.5}
+.bring{background:var(--grn-s);color:#0b6b4a;font-size:14.5px;font-weight:600}
+.say .lb,.bring .lb{display:block;margin:0 0 2px}
+.card details{margin:10px 0 0 38px}.card summary{font-size:13px;color:var(--sub);cursor:pointer;list-style:none}
+.card summary::before{content:"+ "}.card details[open] summary::before{content:"- "}
+.card details p{margin:6px 0 0;font-size:14px;color:var(--ink2)}.card details p.q{color:var(--sub)}
+
+/* 걸었음 */
+label.chk{margin-left:auto;cursor:pointer;user-select:none;flex:none}
+label.chk input{position:absolute;opacity:0;pointer-events:none}
+label.chk span{display:inline-block;font-size:12.5px;font-weight:700;color:var(--sub);border:1.5px solid #d5dbe2;border-radius:999px;padding:4px 11px;background:#fff}
+label.chk input:checked+span{background:var(--grn);border-color:var(--grn);color:#fff}
+label.chk input:checked+span::before{content:"✓ "}
+.done{opacity:.45}
+
+/* 오늘 통화한 고객, 더 보기 */
+.rows{background:var(--card);border-radius:var(--r);box-shadow:var(--sh);overflow:hidden}
+.row,.mini{display:flex;align-items:center;gap:10px;padding:13px 16px;border-top:1px solid var(--line)}
+.row:first-child{border-top:0}
+.row .rt{margin-left:auto;text-align:right;font-size:13px;color:var(--ink2);white-space:nowrap}.row .rt small{display:block;color:var(--sub);font-size:11.5px}
+.row .nm,.mini .nm{font-size:16px}
+details.more{margin-top:26px;background:var(--card);border-radius:var(--r);box-shadow:var(--sh);overflow:hidden}
+details.more>summary{cursor:pointer;list-style:none;padding:14px 16px}
+details.more>summary .sec{margin:0}
+.mini{flex-wrap:wrap}.mini .id{flex:none}.mini p{margin:0;flex:1 1 100%;order:3;font-size:13.5px;color:var(--ink2)}
+.mini .w{font-size:12px;color:var(--sub)}
+.tip{margin:18px 4px 0;font-size:12.5px;color:var(--sub);text-align:center}
+.empty{margin:40px 4px;color:var(--sub);text-align:center}
+
+/* 내 이번 달 */
+.hero{background:linear-gradient(135deg,#1f4fa8,#2f6fdb);color:#fff;border-radius:20px;padding:18px 18px 16px;margin:10px 0 12px;box-shadow:0 6px 18px rgba(47,111,219,.25)}
+.hero .lb{color:#cfe0ff;opacity:1;font-size:12.5px}.hero p{margin:2px 0 0;font-size:13px;color:#dbe7ff}
+.hero .hn{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+.hero .hn div{background:rgba(255,255,255,.12);border-radius:14px;padding:11px 13px}
+.hero .hn b{font-size:30px;font-weight:800;letter-spacing:-.03em;line-height:1.1}.hero .hn small{font-size:15px;font-weight:700;margin-left:2px}
+.hero .hn span{display:block;font-size:12px;color:#dbe7ff;margin-top:2px}
+.mc{background:var(--card);border-radius:var(--r);box-shadow:var(--sh);padding:16px;margin:10px 0}
+.mc .hd{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.mc .hd h3{margin:0;font-size:16px;font-weight:800;letter-spacing:-.02em}
+.chip{font-size:12px;font-weight:700;color:var(--pri);background:var(--pri-s);border-radius:999px;padding:3px 10px;white-space:nowrap}
+.call{margin-top:4px;font-size:15px;color:var(--ink2)}.call b{color:var(--pri-d)}
+.call .big{display:block;font-size:20px;font-weight:800;color:var(--ink);letter-spacing:-.02em;margin-bottom:2px}.call .big em{font-style:normal;color:var(--amb)}
+.mgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;margin:10px 0}
+.mt{background:var(--card);border-radius:14px;box-shadow:var(--sh);padding:13px 14px}
+.mt .lb{display:block;color:var(--sub);opacity:1;margin:0 0 2px}
+.mt b{font-size:24px;font-weight:800;letter-spacing:-.02em}.mt b small{font-size:14px;margin-left:1px}
+.mt p{margin:4px 0 0;font-size:12.5px;color:var(--ink2)}.mt p em{font-style:normal;font-weight:700;color:var(--pri-d)}
+.mt .pb{height:6px;margin-top:8px}.mt .pb i{background:var(--pri)}
+.plist .pi{display:flex;gap:10px;font-size:13.5px;padding:7px 0;border-top:1px solid var(--line)}.plist .pi:first-of-type{border-top:0}
+.plist .pi span{color:var(--sub);flex:0 0 52px}.plist .pi b{margin-left:auto}
+.mfoot{color:var(--sub);font-size:12px;margin:14px 4px;line-height:1.6}
+
+/* 판매인센 금액 */
+.amt{margin:10px 0 0}.amt small{display:block;font-size:12.5px;color:var(--sub)}.amt b{font-size:30px;font-weight:800;letter-spacing:-.03em}
+/* (예전 '지금까지 쌓인 인센' 칸, 10/30 뺌) */
+.sure .tot{font-size:30px;font-weight:800;letter-spacing:-.03em;margin:6px 0 8px}
+.sure .si{display:flex;justify-content:space-between;font-size:14px;padding:7px 0;border-top:1px solid var(--line);color:var(--ink2)}
+.sure .si b{font-variant-numeric:tabular-nums}.sure .si.neg b{color:var(--red)}
+.sure .sn{margin:8px 0 0;font-size:12px;color:var(--sub);line-height:1.55}
+
+/* 구간 그림 */
+.lad{position:relative;margin:38px 2px 4px}
+.lad .tr{position:relative;height:30px;border-radius:10px;background:#edf0f3;overflow:hidden}
+.lad .sg{position:absolute;top:0;bottom:0;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;color:#fff;border-right:2px solid #fff;white-space:nowrap;overflow:hidden}
+.lad .sg.l0{background:#8fb3ef}.lad .sg.l1{background:#5f92e6}.lad .sg.l2{background:#2f6fdb}.lad .sg.l3{background:#1f4fa8}.lad .sg.l4{background:#14367a}
+.lad .sg.zero{background:#d9dee5;color:#6b7684}
+.lad .sg.fut{filter:saturate(.35) brightness(1.18);color:rgba(255,255,255,.95)}
+.lad .sg.zero.fut{filter:none}
+.lad .fill{position:absolute;left:0;top:0;bottom:0;background:linear-gradient(90deg,#5f92e6,#2f6fdb);border-radius:10px}
+.lad .pin{position:absolute;top:-34px;transform:translateX(-50%);font-style:normal;white-space:nowrap;z-index:2}
+.lad .pin b{display:block;font-size:12px;font-weight:800;background:var(--ink);color:#fff;padding:3px 9px;border-radius:8px}
+.lad .pin::after{content:"";position:absolute;left:50%;top:22px;transform:translateX(-50%);border:5px solid transparent;border-top-color:var(--ink)}
+.lad .pin::before{content:"";position:absolute;left:50%;top:30px;width:2px;height:32px;background:var(--ink);transform:translateX(-50%)}
+.lad .tks{position:relative;height:22px}.lad .tks.step{height:36px}
+.lad .tk{position:absolute;top:5px;transform:translateX(-50%);font-size:11.5px;color:var(--sub);text-align:center;line-height:1.25;font-variant-numeric:tabular-nums}
+.lad .tk em{display:block;font-style:normal;font-size:11px;color:#adb5bd}
+.lad .tk.ok{color:var(--pri-d);font-weight:800}.lad .tk.ok em{color:var(--pri)}
+
+/* 매니저 */
+.ydt{background:var(--card);border-radius:var(--r);box-shadow:var(--sh);padding:6px 16px 10px;margin:10px 0}
+.ydt .r{display:grid;grid-template-columns:64px 1fr 52px 40px;align-items:center;gap:10px;padding:8px 0;border-top:1px solid var(--line);font-size:13.5px}
+.ydt .r:first-child{border-top:0;color:var(--sub);font-size:12px}
+.ydt .r .pb{margin:0;height:7px}.ydt .r.zero{color:var(--red)}.ydt .r.zero .pb{background:#fbe4ec}
+.ydt .r.tot{font-weight:800;border-top:1.5px solid var(--ink)}
+.ydt .r span:nth-child(3),.ydt .r span:nth-child(4){text-align:right;font-variant-numeric:tabular-nums}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin:14px 0 6px}
+.chips button{border:0;background:var(--card);box-shadow:var(--sh);border-radius:10px;padding:7px 11px;font:inherit;font-size:14px;font-weight:700;cursor:pointer;color:var(--ink2)}
+.chips button small{display:block;font-size:11px;font-weight:500;color:var(--sub)}
+.chips button.on{background:var(--ink);color:#fff}.chips button.on small{color:#c5ccd6}
+.hint{font-size:11.5px;color:var(--sub);margin:2px 4px 8px}
+.one{margin-top:6px}
+
+/* 로그인 */
+.login{max-width:360px;margin:14vh auto 0;text-align:center;background:var(--card);border-radius:20px;box-shadow:var(--sh);padding:30px 24px}
+.login h1{font-size:22px;margin:0 0 6px;font-weight:800}.login p{color:var(--sub);margin:0 0 18px;font-size:14px}
+.login form{display:flex;gap:8px}
+.login input#code{flex:1;min-width:0;height:48px;border:1.5px solid #d5dbe2;border-radius:12px;padding:0 14px;font:inherit;font-size:18px;letter-spacing:1px;text-align:center}
+.login input#code:focus{outline:none;border-color:var(--pri)}
+.login button{height:48px;padding:0 20px;border:0;border-radius:12px;background:var(--pri);color:#fff;font:inherit;font-size:16px;font-weight:700;cursor:pointer}
+.login .rem{display:block;margin-top:14px;font-size:13px;color:var(--sub)}
+.login .err{margin-top:12px;min-height:20px;font-size:14px;color:var(--amb)}
+.foot{margin:34px 4px 0;text-align:center;font-size:12.5px}.foot a{color:var(--sub)}
+.copied{position:fixed;bottom:26px;left:50%;transform:translateX(-50%);background:var(--ink);color:#fff;padding:9px 18px;border-radius:10px;font-size:14px;display:none;z-index:9}
+@media (max-width:420px){.wrap{padding:14px 12px 48px}.tags,.promise,.say,.bring,.prev,.card details{margin-left:0}.stats b{font-size:23px}.hero .hn b{font-size:26px}}
+/* 지난 달 기록 (2026-11-02) */
+.hero.past{background:linear-gradient(135deg,#4b5563,#6b7280);box-shadow:0 6px 18px rgba(75,85,99,.22)}
+.hero.past .lb,.hero.past p,.hero.past .hn span{color:#e5e7eb}
+.hbar{display:flex;gap:6px;flex-wrap:wrap;margin:14px 0 4px}
+.hbar button{border:0;background:#e4e8ee;border-radius:9px;padding:9px 14px;font:inherit;font-size:14px;font-weight:700;color:#6b7684;cursor:pointer}
+.hbar button.on{background:#fff;color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.08)}
+.mc.pend{text-align:center;padding:30px 18px 26px}
+.mc.pend h3{margin:0 0 10px}
+.mc.pend p{margin:0;color:var(--ink2);font-size:15px;line-height:1.7}
+.mc.pend button{margin-top:18px;border:0;background:var(--pri-s);color:var(--pri-d);border-radius:10px;padding:11px 18px;font:inherit;font-size:14.5px;font-weight:700;cursor:pointer}
+/* 세트 현황 (매니저, 2026-11-03) */
+.sdt{background:var(--card);border-radius:var(--r);box-shadow:var(--sh);padding:6px 16px 10px;margin:10px 0}
+.sdt .r{display:grid;grid-template-columns:54px 42px 36px 1fr 40px 34px;align-items:center;gap:8px;padding:8px 0;border-top:1px solid var(--line);font-size:13.5px;font-variant-numeric:tabular-nums}
+.sdt .r:first-child{border-top:0;color:var(--sub);font-size:11.5px}
+.sdt .r>span:nth-child(n+2){text-align:right}
+.sdt .r.tot{font-weight:800;border-top:1.5px solid var(--ink)}
+.sdt .bar{position:relative;height:22px;border-radius:6px;background:#edf0f3;overflow:hidden}
+.sdt .bar i{position:absolute;left:0;top:0;bottom:0;border-radius:6px}
+.sdt .bar span{position:relative;display:block;font-size:12px;font-weight:700;line-height:22px;padding-left:8px;color:var(--ink)}
+.bar i.g{background:#9fdcc0}.bar i.lg{background:#c6ebd8}.bar i.a{background:#ffd3ae}.bar i.r{background:#f6b8ca}
+.bad{color:var(--red);font-weight:800}
+.mx{overflow-x:auto;background:var(--card);border-radius:var(--r);box-shadow:var(--sh);margin:10px 0}
+.mx table{border-collapse:collapse;font-size:13px;white-space:nowrap}
+.mx th,.mx td{padding:7px 9px;text-align:center;border-top:1px solid var(--line)}
+.mx thead th{color:var(--sub);font-weight:600;font-size:11.5px;cursor:pointer;border-top:0;padding-top:10px}
+.mx thead th.on{color:var(--ink);font-weight:800;box-shadow:inset 0 -2px 0 var(--ink)}
+.mx th:first-child{position:sticky;left:0;background:var(--card);text-align:left;z-index:1;box-shadow:1px 0 0 var(--line)}
+.mx tbody th{font-weight:700;cursor:pointer}
+.mx tbody tr.on th{color:var(--pri)}
+.mx td{font-weight:700;font-variant-numeric:tabular-nums;min-width:46px;line-height:1.2}
+.mx td small{display:block;font-size:10.5px;font-weight:500;opacity:.85}
+.mx td.g{background:#e7f6ef;color:#0b6b4a}.mx td.lg{background:#f2faf6;color:#2f7d5a}.mx td.a{background:#fff3e8;color:#a33d06}.mx td.r{background:#fdecef;color:#b02a55}
+.mx td.nil{color:#c5ccd6;font-weight:400}
+.mx td.sel{outline:2px solid var(--ink);outline-offset:-2px}
+.mx td.avg{border-right:1.5px solid var(--line)}
+.mx tr.ctr th,.mx tr.ctr td{border-bottom:1.5px solid var(--ink)}
+.sone .r{display:grid;grid-template-columns:62px 1fr 1fr 1.3fr 1fr 1fr 1fr;align-items:center;gap:6px;padding:8px 0;border-top:1px solid var(--line);font-size:13px;text-align:right;font-variant-numeric:tabular-nums}
+.sone .r span:first-child{text-align:left}
+.sone .r:first-child{border-top:0;color:var(--sub);font-size:11.5px}
+.sone .r small{display:block;font-size:10.5px;color:var(--sub);font-weight:500}
+.sdt .r:first-child>span:nth-child(4){text-align:left}
+/* 세트 현황 쉬운 말 (11/3 저녁) */
+details.guide{background:var(--pri-s);border-radius:var(--r);padding:12px 16px;margin:12px 0 4px;color:var(--pri-d)}
+details.guide summary{cursor:pointer;font-size:15px;font-weight:800;list-style:none}
+details.guide summary::before{content:"+ ";font-weight:800}details.guide[open] summary::before{content:"- "}
+details.guide ul{margin:10px 0 2px;padding-left:18px;font-size:14px;line-height:1.7;color:#24406f}
+details.guide li{margin:4px 0}details.guide b{color:var(--pri-d)}
+.sum{background:var(--card);border-radius:var(--r);box-shadow:var(--sh);padding:16px 18px;margin:10px 0}
+.sum p{margin:4px 0;font-size:14.5px;color:var(--ink2)}
+.sum p.big{font-size:18px;font-weight:800;color:var(--ink);letter-spacing:-.02em;line-height:1.45}.sum p.big b{color:var(--grn)}
+.sum p.sub{font-size:13px;color:var(--sub);margin-top:8px}
+.tell{background:var(--amb-s);border:1px solid #ffd8bd;border-radius:var(--r);padding:14px 16px;margin:10px 0 6px}
+.tell h3{margin:0;font-size:15.5px;font-weight:800;color:#a33d06}
+.tell .sub{margin:4px 0 6px;font-size:12.5px;color:#a8562a}
+.tell .ti{background:#fff;border-radius:12px;padding:10px 12px;margin-top:8px}
+.tell .tn{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}.tell .tn b{font-size:15px}.tell .tn span{font-size:12.5px;color:var(--sub)}
+.tell .cp{margin:6px 0 0;font-size:14px;color:var(--ink2);cursor:pointer;line-height:1.55}.tell .cp:hover{color:var(--ink)}
+.sdt .r[data-a]{cursor:pointer}.sdt .r[data-a]:hover{background:#f7f9fb}.sdt .r.on>span:first-child{color:var(--pri);font-weight:800}
+.read{background:var(--card);border-radius:12px;box-shadow:var(--sh);padding:11px 14px;margin:8px 0;font-size:13.5px;color:var(--ink2);line-height:1.6}
+.read>b:first-child{display:inline-block;font-size:12px;color:#fff;background:var(--ink);border-radius:6px;padding:1px 7px;margin-right:6px}
+.legend{display:flex;align-items:center;gap:10px;margin:8px 2px;font-size:12.5px;color:var(--ink2);line-height:1.5}
+.legend .smp{display:inline-block;min-width:46px;text-align:center;border-radius:6px;padding:5px 6px;font-weight:700;font-size:13px;line-height:1.2}
+.legend .smp small{display:block;font-size:10.5px;font-weight:500}
+.legend.chipsrow{flex-wrap:wrap;gap:6px}
+.legend .lc{border-radius:999px;padding:3px 10px;font-size:12px;font-weight:700}
+.smp.g,.lc.g{background:#e7f6ef;color:#0b6b4a}.lc.lg{background:#f2faf6;color:#2f7d5a}.lc.a{background:#fff3e8;color:#a33d06}.lc.r{background:#fdecef;color:#b02a55}.lc.nil{background:#f1f3f5;color:#8b95a1;font-weight:500}
+.mc .x{border:0;background:#eef1f4;border-radius:8px;padding:5px 11px;font:inherit;font-size:12.5px;font-weight:700;color:var(--ink2);cursor:pointer}
+.mc .lead{margin:8px 0 4px;font-size:14px;color:var(--ink2);line-height:1.6}.mc .lead b{color:var(--ink)}
+.sdt .r{grid-template-columns:58px 52px 52px 1fr 52px 52px}
+.sdt .r:first-child{font-size:12px;line-height:1.3}
+@media (max-width:480px){.sdt{padding:6px 10px 10px}.sdt .r{grid-template-columns:48px 34px 34px 1fr 34px 32px;gap:6px;font-size:12.5px}.sdt .r:first-child{font-size:10.5px}}
+/* 세트 현황 짧게 (11/3 밤) */
+.sum .lb{display:block;font-size:13px;color:var(--sub);font-weight:700}
+.sum p.big{font-size:22px;margin:2px 0}.sum p.big b.bad{color:var(--red)}
+.tell h3 small{font-size:12px;font-weight:600;color:#a8562a;margin-left:6px}
+.tell .ti{cursor:pointer}.tell .ti b{font-size:14.5px}.tell .ti p{margin:4px 0 0;font-size:14px;color:var(--ink2);line-height:1.55}
+.tell .ti:hover{box-shadow:0 0 0 1.5px #ffc89e inset}
+.sdt.s3 .r{grid-template-columns:1fr 90px 90px}
+.sdt.s3 .r>span:nth-child(n+2){text-align:right}
+.mx td.w{background:#fff;color:var(--ink2)}.mx td.g{color:#0b6b4a}
+@media (max-width:480px){.sdt.s3 .r{grid-template-columns:1fr 76px 76px;font-size:13.5px}.sdt.s3 .r:first-child{font-size:11.5px}}
+.tell .tchips{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0 6px}
+.tell .tchips button{border:0;background:#fff;border-radius:10px;padding:8px 12px;font:inherit;font-size:14.5px;font-weight:700;color:var(--ink);cursor:pointer;box-shadow:0 1px 2px rgba(0,0,0,.06)}
+.tell .tchips button b{color:var(--red);margin-left:2px}
+.tell .msg{margin:6px 0 2px;font-size:14px;color:var(--ink2);line-height:1.6}
+/* 코디별 막대 다시 (11/3 밤) */
+.sdt.s3 .r{grid-template-columns:58px 64px 1fr 64px}
+.sdt.s3 .r>span:nth-child(3){text-align:left}
+.gb{position:relative;display:flex;height:24px;border-radius:7px;background:#edf0f3;overflow:hidden}
+.gb i{display:block;height:100%}.gb i.ok{background:#9fdcc0}.gb i.no{background:#f6b8ca}
+.gb em{position:absolute;left:8px;top:0;line-height:24px;font-style:normal;font-size:12px;font-weight:700;color:var(--ink)}
+.sdt .r i.lg{display:inline-block;width:10px;height:10px;border-radius:3px;margin:0 4px 0 8px;vertical-align:-1px}.sdt .r i.lg:first-child{margin-left:0}
+.sdt .r i.lg.ok{background:#9fdcc0}.sdt .r i.lg.no{background:#f6b8ca}
+@media (max-width:480px){.sdt.s3 .r{grid-template-columns:48px 44px 1fr 44px}}
+
+/* 계약률 오른 폭 (11/9) */
+.mc .hn.rr{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:10px 0 4px}
+.mc .hn.rr div{background:var(--bg);border-radius:12px;padding:10px 11px}
+.mc .hn.rr b{display:block;font-size:22px;font-weight:800;letter-spacing:-.02em;line-height:1.15}
+.mc .hn.rr span{display:block;font-size:12px;color:var(--sub);margin-top:2px}
+.mc .hn.rr b.upv{color:var(--grn)}.mc .hn.rr b.dnv{color:var(--red)}
+</style></head><body><div class="wrap" id="app"></div><div class="copied">복사했습니다</div><script>// 재컨택 리스트 페이지. data.json 의 항목 하나하나가 코디 한 명의 리스트이고, 그 코디의 접속코드로 잠겨 있다.
+// 코드를 받으면 브라우저 안에서 키를 만들어(PBKDF2) 풀리는 항목을 찾는다. 서버로 보내는 것은 없다.
+// 화면 두 칸(탭 이름은 2026-11-12 사용자 요청으로 바꿈): [다시 걸 고객] 먼저 걸 고객, 오늘 통화한 고객, 더 보기 / [내 성과 현황] 인센 구간표 위 내 위치 (그 달 규칙이 있을 때, my_month.py)
+// [내 이번 달] 탭 안에서 달을 고른다: 이번 달(규칙이 없으면 '아직 정해지지 않았습니다' 안내) + 지난 달 기록(p.hist, 그 달 말일 마감본, 2026-11-02)
+const $ = s => document.querySelector(s);
+const E = s => String(s ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+const LS = { get(k) { try { return localStorage.getItem(k) } catch (e) { return null } }, set(k, v) { try { localStorage.setItem(k, v) } catch (e) { } }, del(k) { try { localStorage.removeItem(k) } catch (e) { } } };
+const norm = c => c.toLowerCase().replace(/[^0-9a-z]/g, '');
+const b2u = b => Uint8Array.from(atob(b), c => c.charCodeAt(0));
+const todayKST = () => new Date(Date.now() + 9 * 3600e3).toISOString().slice(0, 10);
+const nowHM = () => new Date(Date.now() + 9 * 3600e3).toISOString().slice(11, 16);
+const dlab = d => `${+d.slice(5, 7)}월 ${+d.slice(8)}일`;
+const won = n => (n || 0).toLocaleString('ko-KR') + '원';
+const man = n => (n || 0) % 10000 === 0 ? `${(n || 0) / 10000}만 원` : won(n);
+const manS = n => (n || 0) % 10000 === 0 ? `${(n || 0) / 10000}만` : won(n);
+const pct = (a, b) => b ? Math.max(0, Math.min(100, 100 * a / b)).toFixed(0) : 0;
+let DATA = null;
+
+// 오전에는 어제 리스트가 보이는 게 정상이다(오늘 리스트는 15:30). 그때는 '먼저' 칸부터 걸라고 안내한다
+const staleNote = d => nowHM() < '15:30'
+  ? `<div class="note am">${dlab(d)} 리스트입니다. 오전에는 <b>'먼저' 칸부터</b> 걸어 주세요. 오늘 리스트는 오후 3시 30분에 올라옵니다.</div>`
+  : `<div class="note warn">오늘 리스트가 아직 올라오지 않았습니다. 아래는 ${dlab(d)} 리스트입니다.</div>`;
+// 어제 '먼저' 칸을 다시 걸었나 (오늘 리스트를 볼 때만)
+const ydayNote = y => !(y && y.n) ? '' : `<div class="yday${y.called ? '' : ' nil'}"><div class="yt">`
+  + (y.called ? `${dlab(y.date)} '먼저' 고객 ${y.n}명 중 <b>${y.called}명</b>에게 다시 거셨습니다${y.won ? `. 그중 <b>${y.won}명 계약</b>` : ''}.`
+    : `${dlab(y.date)} '먼저' 고객 ${y.n}명에게 <b>아직 다시 걸지 않으셨습니다</b>. 아래 '먼저' 칸부터 걸어 주세요.`)
+  + `</div><div class="pb"><i style="width:${y.called ? pct(y.called, y.n) : 3}%"></i></div></div>`;
+
+async function load() { if (DATA) return DATA; const r = await fetch('data.json?t=' + Date.now(), { cache: 'no-store' }); DATA = await r.json(); return DATA; }
+async function unlock(code) {
+  if (!window.crypto || !crypto.subtle) throw new Error('이 브라우저에서는 열 수 없습니다. 크롬이나 엣지로 열어 주세요.');
+  const d = await load();
+  const base = await crypto.subtle.importKey('raw', new TextEncoder().encode(norm(code)), 'PBKDF2', false, ['deriveKey']);
+  const key = await crypto.subtle.deriveKey({ name: 'PBKDF2', salt: b2u(d.salt), iterations: d.iter, hash: 'SHA-256' }, base, { name: 'AES-GCM', length: 256 }, false, ['decrypt']);
+  for (const e of d.entries) {
+    try { const pt = await crypto.subtle.decrypt({ name: 'AES-GCM', iv: b2u(e.iv) }, key, b2u(e.ct)); return JSON.parse(new TextDecoder().decode(pt)); } catch (x) { }
+  }
+  return null;
+}
+
+function login(msg) {
+  $('#app').innerHTML = `<div class="login"><h1>오늘의 리스트</h1><p>받으신 접속코드를 넣어 주세요.</p>
+    <form id="f"><input id="code" autocomplete="off" spellcheck="false" placeholder="예: abcd-2345"><button>열기</button></form>
+    <label class="rem"><input type="checkbox" id="rem" checked> 이 PC에서 기억</label><div class="err">${E(msg || '')}</div></div>`;
+  $('#code').focus();
+  $('#f').onsubmit = async e => {
+    e.preventDefault(); const c = $('#code').value; if (!norm(c)) return;
+    $('.err').textContent = '여는 중입니다';
+    let p = null; try { p = await unlock(c); } catch (x) { $('.err').textContent = x.message; return; }
+    if (!p) { $('.err').textContent = '코드가 맞지 않습니다. 다시 확인해 주세요.'; return; }
+    if ($('#rem').checked) LS.set('rc-code', c);
+    show(p);
+  };
+}
+
+// ── 오늘 리스트 ──
+// [걸었음] 버튼은 뺐다(2026-11-12 사용자: 체크해도 그 PC 에만 남아 쓰지 않는다). 번호는 전체를 보여 주고 누르면 전체가 복사된다
+const chk = '';
+const tbBdg = x => x.tb ? '<span class="bdg tb">초록별</span>' : '';
+const who = x => `<div class="id"><span class="nm" title="눌러서 이름 복사">${E(x.name || '이름 없음')}</span><span class="tel" title="눌러서 번호 복사">${E(x.tel)}</span></div>`;
+const sec = (n, t, s) => `<div class="sec"><span class="n">${n}</span><h2>${t}</h2>${s ? `<small>${s}</small>` : ''}</div>`;
+const card = (n, x) => `<article class="card${x.due || x.missed ? ' hot' : ''}" data-k="c${E(x.k)}">
+  <div class="c-top"><span class="no">${n}</span>${who(x)}${chk}</div>
+  <div class="tags">${tbBdg(x)}${x.due ? '<span class="bdg due">약속일</span>' : x.missed ? '<span class="bdg due">약속 지남</span>' : ''}${x.chance === '상' ? '<span class="bdg hi">가능성 높음</span>' : ''}<span class="when">${E(x.when)} ${E(x.t)}, 통화 ${x.min}분</span></div>
+  ${x.summary ? `<div class="prev"><span class="lb">지난 통화</span><p>${E(x.summary)}</p>${x.quote ? `<p class="q">고객 말: "${E(x.quote)}"</p>` : ''}</div>` : ''}
+  ${x.promise ? `<div class="promise"><span class="lb">약속</span>${E(x.promise)}</div>` : ''}
+  ${x.opener ? `<div class="say"><span class="lb">첫마디</span>${E(x.opener)}</div>` : ''}
+  ${x.bring ? `<div class="bring"><span class="lb">가져갈 것</span>${E(x.bring)}</div>` : ''}
+</article>`;
+const trow = x => `<div class="row" data-k="t${E(x.k)}">${who(x)}${tbBdg(x)}<div class="rt">${E(x.t)}, ${x.min}분<small>받은 번호 ${E(x.iv)}</small></div>${chk}</div>`;
+const mini = x => `<div class="mini" data-k="m${E(x.k)}">${who(x)}${tbBdg(x)}<span class="w">${E(x.when)}, ${x.min}분</span>${chk}<p>${E(x.summary || x.opener || '')}</p>${x.summary && x.opener ? `<p class="op">첫마디: ${E(x.opener)}</p>` : ''}</div>`;
+
+function listView(p) {
+  const f = p.first || [], t = p.today || [], m = p.more || [];
+  let h = p.date !== todayKST() ? staleNote(p.date) : ydayNote(p.yday);
+  // 맨 위 숫자 세 칸과 '오늘 프로모션' 칸은 뺐다(2026-11-12 사용자: 쓸데없다). 사람 수는 칸 제목 옆에, '더 보기'는 처음부터 펼쳐 둔다
+  if (!f.length && !t.length && !m.length) return h + '<div class="empty">오늘 리스트에 넣을 고객이 없습니다.</div>';
+  let n = 0;
+  if (f.length) h += sec(++n, '먼저 걸 고객', `${f.length}명, 약속한 날이 됐거나 계약 가능성이 높은 고객`) + f.map((x, i) => card(i + 1, x)).join('');
+  if (t.length) h += sec(++n, '오늘 통화한 고객', `${t.length}명, 3분 넘게 통화, 아직 계약 전`) + `<div class="rows">${t.map(trow).join('')}</div>`;
+  if (m.length) h += `<details class="more" open><summary>${sec(++n, '더 보기', `${m.length}명, 시간이 남으면`)}</summary>${m.map(mini).join('')}</details>`;
+  return h + '<p class="tip">이름이나 번호를 누르면 복사됩니다. CMS에서 찾아 걸어 주세요.</p>';
+}
+
+function bind(p, root) {
+  const KEY = `rc-st-${p.date}-${p.agent}`; let st = {};
+  try { st = JSON.parse(LS.get(KEY) || '{}') } catch (e) { }
+  root.querySelectorAll('[data-k]').forEach(el => {
+    const b = el.querySelector('input[type=checkbox]'); if (!b) return;
+    b.checked = !!st[el.dataset.k]; el.classList.toggle('done', b.checked);
+    b.addEventListener('change', () => { st[el.dataset.k] = b.checked; el.classList.toggle('done', b.checked); LS.set(KEY, JSON.stringify(st)); });
+  });
+  const copy = v => { try { navigator.clipboard.writeText(v) } catch (e) { } const c = $('.copied'); c.style.display = 'block'; setTimeout(() => c.style.display = 'none', 1200); };
+  root.querySelectorAll('.nm').forEach(t => t.addEventListener('click', () => copy(t.textContent.trim())));
+  root.querySelectorAll('.tel').forEach(t => t.addEventListener('click', () => copy(t.textContent.trim())));
+}
+
+// ── 내 이번 달 ──
+// 구간표 그림: 공지의 구간(또는 단계)을 막대로 놓고 지금 위치에 핀을 찍는다
+// kind 'rate' = 판매인센(구간마다 1점당 금액, 칸 안에 표시) / 'step' = 계약 수(그 건수에 닿으면 받는 금액, 눈금 아래 표시)
+function ladder(v, stops, kind, unit, now = '지금') {
+  if (!stops || !stops.length) return '';
+  const last = stops[stops.length - 1].at, max = Math.max(last * 1.18, v * 1.08, last + 8);
+  const X = x => Math.max(0, Math.min(100, 100 * x / max)).toFixed(1);
+  let h = '<div class="lad"><div class="tr">';
+  if (kind === 'rate') {
+    const seg = [];
+    if (stops[0].at > 0) seg.push({ lo: 0, hi: stops[0].at, lab: '0원', z: true });
+    stops.forEach((st, i) => seg.push({ lo: st.at, hi: i + 1 < stops.length ? stops[i + 1].at : max, lab: manS(st.rate), i }));
+    seg.forEach(g => {
+      const st = v >= g.hi ? 'done' : v >= g.lo ? 'cur' : 'fut';
+      h += `<span class="sg ${g.z ? 'zero' : 'l' + Math.min(4, g.i)} ${st}" style="left:${X(g.lo)}%;width:${(X(g.hi) - X(g.lo)).toFixed(1)}%">${g.lab}</span>`;
+    });
+  } else {
+    h += `<span class="fill" style="width:${X(v)}%"></span>`;
+  }
+  h += `</div><i class="pin" style="left:${X(v)}%"><b>${now} ${v}${unit}</b></i><div class="tks ${kind}">`;
+  stops.forEach(st => { h += `<span class="tk${v >= st.at ? ' ok' : ''}" style="left:${X(st.at)}%">${st.at}${kind === 'step' && st.amount != null ? `<em>${manS(st.amount)}</em>` : ''}</span>`; });
+  return h + '</div></div>';
+}
+const mt = (lb, n, unit, txt, ratio) => `<div class="mt"><span class="lb">${E(lb)}</span><b>${n}<small>${unit}</small></b><p>${txt}</p>`
+  + (ratio != null ? `<div class="pb"><i style="width:${Math.max(4, ratio).toFixed(0)}%"></i></div>` : '') + '</div>';
+
+function monthView(m) {
+  // 금액은 판매인센 구간에만 (사용자 결정 10/30). 금액 = 지금 포인트를 이번 달 공지 구간표에 넣은 값 (my_month.py)
+  // m.final = 끝난 달의 마감본(말일까지 계약, 말일까지 취소 뺌). '다음까지' 같은 남은 말은 빼고 마감 위치만 보여 준다
+  const s = m.sale || {}, F = !!m.final, mo = +m.ym.slice(5), now = F ? '마감' : '지금';
+  let h = `<section class="hero${F ? ' past' : ''}"><span class="lb">${mo}월 내 성과${F ? ' (마감)' : ''}</span>`
+    + (F ? `<p>${mo}월 말일까지 들어온 계약, ${mo}월 안에 취소된 건 뺌</p>` : `<p>${dlab(m.upto)}까지 들어온 계약, 남은 영업일 ${m.days_left}일 (오늘 포함)</p>`) + '<div class="hn">'
+    + `<div><b>${m.contracts}</b><small>건</small><span>${F ? `${mo}월` : '이번 달'} 계약${m.cancels ? ` (취소 ${m.cancels}건 뺌)` : ''}</span></div>`
+    + `<div><b>${m.points}</b><small>점</small><span>판매인센 포인트${s.newbie ? ', 신입 기간' : ''}</span></div></div></section>`;
+  const amtLab = F ? `${mo}월 판매인센` : '지금까지 판매인센';
+  if (s.newbie) {
+    h += `<div class="mc"><div class="hd"><h3>판매인센</h3><span class="chip">신입 기간</span></div>`
+      + `<div class="amt"><small>${amtLab}</small><b>${won(s.amount)}</b></div><div class="call">신입 기간이라 구간 없이 1점에 <b>${won(s.rate)}</b>입니다.</div></div>`;
+  } else if (s.ladder) {
+    const n = s.next;
+    const call = F ? `<span class="big">${s.rate ? `1점에 ${won(s.rate)} 구간에서 마감` : '0원 구간에서 마감'}</span>${m.points}점으로 마감했습니다.`
+      : n ? `<span class="big">다음 구간까지 <em>${n.need_pts}점</em> (계약 약 ${n.need_ct}건)</span>${n.at}점부터는 1점에 <b>${won(n.rate)}</b>입니다.`
+      : `<span class="big">가장 높은 구간입니다</span>1점에 <b>${won(s.rate)}</b>입니다.`;
+    h += `<div class="mc"><div class="hd"><h3>판매인센 구간</h3><span class="chip">${s.rate ? `${now} 1점에 ${won(s.rate)}` : F ? '0원 구간 마감' : '아직 0원 구간'}</span></div>`
+      + `<div class="amt"><small>${amtLab}</small><b>${won(s.amount)}</b></div>`
+      + ladder(m.points || 0, s.ladder, 'rate', '점', now) + `<div class="call">${call}</div></div>`;
+  }
+  // 아래 칸들은 금액 없이 건수만 (금액은 판매인센 구간에만)
+  const c = m.count;
+  if (c) {
+    const call = F ? `<span class="big">${c.n}건으로 마감</span>`
+      : c.next ? `<span class="big"><em>${c.next.need}건</em> 더 하면 ${c.next.at}건</span>다음 단계까지 남은 건수입니다.` : '<span class="big">가장 높은 단계입니다</span>';
+    h += `<div class="mc"><div class="hd"><h3>계약 수 보너스</h3><span class="chip">${c.basis} 계약 ${c.n}건</span></div>` + ladder(c.n, c.ladder, 'step', '건', now) + `<div class="call">${call}</div></div>`;
+  }
+  // 계약률 상승폭 (2026-11~): 내 10월 계약률과 이번 달 계약률. 순위나 남의 숫자는 보여 주지 않는다
+  const rt = m.rate;
+  if (rt) {
+    const pc = v => v == null ? '-' : `${(+v).toFixed(1)}%`;
+    const up = rt.rise == null ? '' : `${rt.rise >= 0 ? '+' : ''}${(+rt.rise).toFixed(1)}%p`;
+    const call = F ? `<span class="big">계약수 ${rt.n}건으로 마감</span>`
+      : rt.need ? `<span class="big">계약수 <em>${rt.need}건</em> 더 하면 순위에 들어갑니다</span>${rt.min}건 이상(평일 하루 1건)부터 순위에 듭니다. 지금 ${rt.n}건.`
+      : `<span class="big">계약수 ${rt.min}건을 넘었습니다</span>이제 내 10월보다 계약률을 얼마나 올렸는지로 순위를 정합니다.`;
+    h += `<div class="mc"><div class="hd"><h3>계약률 오른 폭</h3><span class="chip">${E(rt.group)}그룹</span></div>`
+      + `<div class="hn rr"><div><b>${pc(rt.base)}</b><span>10월 내 계약률</span></div><div><b>${pc(rt.now)}</b><span>${F ? `${mo}월` : '이번 달'} 내 계약률</span></div>`
+      + `<div><b class="${rt.rise != null && rt.rise >= 0 ? 'upv' : 'dnv'}">${up || '-'}</b><span>오른 폭</span></div></div><div class="call">${call}</div></div>`;
+  }
+  let g = '';
+  const every = (p, need) => F ? `${p}건마다 지급` : `${p}건마다 지급. 다음까지 <em>${need}건</em>`;
+  if (m.recall) { const r = m.recall; g += mt('재콜 계약', r.n, '건', every(r.per, r.need), F ? null : 100 * (r.per - r.need) / r.per); }
+  (m.lang || []).forEach(l => { g += mt(`${l.label} 계약`, l.n, '건', every(l.per, l.need), F ? null : 100 * (l.per - l.need) / l.per); });
+  if (m.brainkey) g += mt('브레인키 가입', m.brainkey.acc, '건', `${F ? `${mo}월` : '이번 달'} 계약 중 혜택지급 ${m.brainkey.reg}건, 가입 <em>${m.brainkey.acc}건</em>`, null);
+  if (g) h += `<div class="mgrid">${g}</div>`;
+  // 11/10 사용자 결정: 한 과장 마감성과 파일의 '실계약률'(평일 DB, IN 뺌)과 같은 방식. 21건은 토요일 계약까지 전부
+  if (rt) h += '<p class="mfoot">계약률은 평일(토요일과 공휴일 빼고)에 받은 DB 중 계약한 비율이고, IN 계약은 빼고 셉니다. 10월 마감성과 파일의 실계약률과 같은 방식이며, 이번 달 안에 취소되면 줄어듭니다. 순위 기준인 계약수 21건은 토요일 계약까지 모두 셉니다.</p>';
+  return h + (F ? `<p class="mfoot">${mo}월 마감 기준입니다. ${mo}월 말일까지 들어온 계약에서 ${mo}월 안에 취소된 건을 뺐습니다. 구간은 ${mo}월 인센 공지 그대로이고, 실제 지급액은 급여 정산 때 정해집니다.</p>`
+    : '<p class="mfoot">어제까지 들어온 계약 기준입니다. 이번 달 안에 취소되면 줄어듭니다. 구간은 이번 달 인센 공지 그대로이고, 실제 지급액은 급여 정산 때 정해집니다.</p>');
+}
+
+// ── 화면 ──
+const segBar = (v, lab2) => `<div class="seg"><button data-v="list"${v === 'list' ? ' class="on"' : ''}>다시 걸 고객</button><button data-v="month"${v !== 'list' ? ' class="on"' : ''}>${lab2 || '내 성과 현황'}</button></div>`;
+// 탭 안 달 고르기: [11월] [10월 마감] ... 이번 달이 맨 앞
+const monthBar = (cur, H, v) => !H.length ? '' : '<div class="hbar">'
+  + `<button data-v="month"${v === 'month' ? ' class="on"' : ''}>${+cur.slice(5)}월</button>`
+  + H.map(m => `<button data-v="month:${m.ym}"${v === 'month:' + m.ym ? ' class="on"' : ''}>${+m.ym.slice(5)}월 기록</button>`).join('') + '</div>';
+// 이번 달 규칙(프로모션)이 아직 없을 때
+const pendingView = (cur, H) => `<div class="mc pend"><h3>${+cur.slice(5)}월 내 성과</h3>`
+  + `<p>아직 이번 달 프로모션이 정해지지 않았습니다.<br>프로모션이 확정되면 이곳에 보여 드립니다.</p>`
+  + (H.length ? `<button data-v="month:${H[0].ym}">지난 달(${+H[0].ym.slice(5)}월) 기록 보기</button>` : '') + '</div>';
+// q = 코디 한 명의 데이터. 탭은 이번 달 칸이나 지난 달 기록 중 하나라도 있으면 늘 보인다
+const pickView = (q, view) => {
+  const H = q.hist || [], cur = (q.date || todayKST()).slice(0, 7), tab = !!(q.month || H.length);
+  if (tab && view && view.startsWith('month:')) { const hm = H.find(m => m.ym === view.slice(6)); if (hm) return { v: view, hm, H, cur, tab }; }
+  return { v: tab && view === 'month' ? 'month' : 'list', H, cur, tab };
+};
+const monthTab = (q, r) => monthBar(r.cur, r.H, r.v) + (r.hm ? monthView(r.hm) : q.month ? monthView(q.month) : pendingView(r.cur, r.H));
+const foot = () => '<div class="foot"><a href="#" id="out">다른 코드로 열기</a></div>';
+function show(p, view) {
+  if (p.manager) return manager(p, LS.get('rc-mmode'));
+  const r = pickView(p, view);
+  $('#app').innerHTML = `<div class="top"><h1>${E(p.agent)}<small>코디님</small></h1><p>${dlab(p.date)} ${E((p.made || '').slice(11))} 기준</p>`
+    + (r.tab ? segBar(r.v) : '') + '</div>'
+    + (r.v === 'list' ? listView(p) : monthTab(p, r)) + foot();
+  if (r.v === 'list') bind(p, $('#app'));
+  bindOut();
+  document.querySelectorAll('#app [data-v]').forEach(b => b.onclick = e => { e.preventDefault(); show(p, b.dataset.v); window.scrollTo(0, 0); });
+}
+// ── 세트 현황 (매니저, 2026-11-03) ──
+// 안 받은 당일 DB 고객에게 1시간 반마다 다시 걸었나. 숫자와 기준은 전부 데이터(p.sets, sets_board.py)에서 온다.
+// 11/3 사용자 요청으로 짧게: 보는 숫자는 '덜 건 고객' 하나. 코디에게 할 말에 '세트', '바퀴' 같은 말을 쓰지 않는다.
+const dwk = d => '일월화수목금토'[new Date(d + 'T12:00:00Z').getUTCDay()];
+const dsh = d => `${+d.slice(5, 7)}/${+d.slice(8)}(${dwk(d)})`;
+const addR = (A, r) => { if (r) for (const k of ['db', 'got', 'miss', 'full', 'short', 'none', 'sets']) A[k] = (A[k] || 0) + (r[k] || 0); return A; };
+const hm = s => +s.slice(0, 2) * 60 + +s.slice(3, 5);
+const tgtOf = (R, first) => Math.max(1, Math.min(R.max, 1 + Math.floor((hm(R.end) - hm(first)) / R.step)));
+const dur = m => m % 60 === 30 ? `${Math.floor(m / 60)}시간 반` : m % 60 ? `${Math.floor(m / 60)}시간 ${m % 60}분` : `${m / 60}시간`;
+const clock = m => { const h = Math.floor(m / 60), n = m % 60; return `${h >= 12 ? '오후' : '오전'} ${h > 12 ? h - 12 : h}시${n ? ` ${n}분` : ''}`; };
+const tipOf = (d, r) => r ? `${dsh(d)} 받은 DB ${r.db}명, 그날 통화 ${r.got}명, 끝까지 안 받은 ${r.miss}명 중 덜 건 ${r.short}명${r.none ? ` (한 번도 안 건 ${r.none}명)` : ''}${r.first ? `, 처음 건 시각 ${r.first}` : ''}` : '';
+const copyTxt = v => { try { navigator.clipboard.writeText(v) } catch (e) { } const c = $('.copied'); c.style.display = 'block'; setTimeout(() => c.style.display = 'none', 1200); };
+function setsTab(S, st) {
+  const box = $('#sets'), R = S.rule, days = S.days, ags = S.agents || [], FLAG = R.flag || 5;
+  const d = st.d && S.rows[st.d] ? st.d : days[0], rows = S.rows[d] || {}, latest = d === days[0];
+  const sumDay = dd => ags.reduce((A, a) => addR(A, S.rows[dd][a]), {});
+  const tot = sumDay(d), lastCall = clock(hm('10:30') + R.step * (R.max - 1));
+  const lv = n => n == null ? 'nil' : n >= FLAG ? 'r' : n > 0 ? 'w' : 'g';
+  let h = `<div class="note am">안 받은 고객에게 <b>${dur(R.step)}마다 다시 걸었는지</b> 봅니다. 오전에 처음 건 고객은 하루 ${tgtOf(R, '12:00')}번, 오후 2시에 처음 건 고객은 ${tgtOf(R, '14:00')}번이 기준입니다.</div>`;
+  // 1) 그날 숫자 하나
+  h += `<div class="sum"><span class="lb">${dsh(d)}</span><p class="big">덜 건 고객 <b class="bad">${tot.short || 0}명</b></p><p class="sub">그날 끝까지 안 받은 고객 ${tot.miss || 0}명 중</p></div>`;
+  // 2) 따로 말할 코디 (가장 최근 날만)
+  if (latest) {
+    const T = ags.filter(a => rows[a] && rows[a].short >= FLAG).sort((x, y) => rows[y].short - rows[x].short);
+    const msg = n => `${dsh(d)}에 안 받은 고객 중 ${n}명은 다시 거는 횟수가 모자랐어요. 오늘은 안 받은 고객에게 ${dur(R.step)}마다, ${lastCall}까지 다시 걸어 주세요.`;
+    if (T.length) h += `<div class="tell"><h3>따로 말할 코디</h3><div class="tchips">`
+      + T.map(a => `<button class="cp" data-c="${E(msg(rows[a].short))}">${E(a)} <b>${rows[a].short}명</b></button>`).join('')
+      + `</div><p class="msg">"${E(msg('OO'))}"</p><p class="sub">이름을 누르면 그 코디 숫자로 이 말이 복사됩니다.</p></div>`;
+  }
+  // 3) 그날 코디별
+  // 막대: 안 받은 고객 전체를 100으로, 초록 = 기준만큼 다시 건 고객, 빨강 = 덜 건 고객
+  const gbar = r => !r.miss ? '<div class="gb"><i class="ok" style="width:100%"></i><em>모두 통화</em></div>'
+    : `<div class="gb"><i class="ok" style="width:${100 * r.full / r.miss}%"></i><i class="no" style="width:${100 * r.short / r.miss}%"></i><em>${r.full}/${r.miss}명</em></div>`;
+  const row = (a, r, cls) => `<div class="r ${cls || ''}" title="${E(tipOf(d, r))}"><span>${a}</span><span>${r.miss || 0}</span>${gbar(r)}<span class="${(r.short || 0) >= FLAG ? 'bad' : ''}">${r.short || 0}</span></div>`;
+  h += sec(1, `${dsh(d)} 코디별`, '')
+    + `<div class="sdt s3"><div class="r"><span>코디</span><span>안 받은 고객</span><span><i class="lg ok"></i>기준만큼 다시 건 <i class="lg no"></i>덜 건</span><span>덜 건 고객</span></div>`
+    + ags.filter(a => rows[a]).map(a => row(E(a), rows[a])).join('') + row('합계', tot, 'tot') + '</div>';
+  // 4) 날짜별 (칸 = 덜 건 고객 수)
+  const cell = (dd, r) => r ? `<td class="${lv(r.short)}${dd === d ? ' sel' : ''}" title="${E(tipOf(dd, r))}">${r.short}</td>` : '<td class="nil">-</td>';
+  const reds = a => days.filter(dd => S.rows[dd][a] && S.rows[dd][a].short >= FLAG).length;
+  h += sec(2, '날짜별 덜 건 고객', `빨강 = ${FLAG}명 이상, 날짜를 누르면 위 표가 그날로`)
+    + `<div class="mx"><table><thead><tr><th>코디</th><th class="avg">빨간 날</th>`
+    + days.map(dd => `<th data-d="${dd}" class="${dd === d ? 'on' : ''}">${dsh(dd)}</th>`).join('') + '</tr></thead><tbody>'
+    + `<tr class="ctr"><th>센터</th><td class="avg"></td>${days.map(dd => { const t = sumDay(dd); return `<td class="${dd === d ? 'sel' : ''}" title="${E(tipOf(dd, t))}">${t.short}</td>`; }).join('')}</tr>`
+    + ags.map(a => `<tr><th>${E(a)}</th><td class="avg">${reds(a)}일</td>${days.map(dd => cell(dd, S.rows[dd][a])).join('')}</tr>`).join('')
+    + '</tbody></table></div>';
+  h += `<p class="mfoot">최근 ${days.length}일. 전날 기록이 오후 3시 30분에 붙습니다. '-'는 그날 DB를 안 받은 날입니다.</p>`;
+  box.innerHTML = h;
+  box.querySelectorAll('thead th[data-d]').forEach(t => t.onclick = () => setsTab(S, { ...st, d: t.dataset.d }));
+  box.querySelectorAll('.cp').forEach(t => t.onclick = () => copyTxt(t.dataset.c));
+}
+
+function manager(p, mode) {
+  const L = p.lists || {}, names = Object.keys(L);
+  let h = `<div class="top"><h1>매니저</h1><p>${dlab(p.date)} 재컨택, ${E((p.made || '').slice(11))} 기준</p>`
+    + (p.sets ? `<div class="seg"><button data-m="list"${mode !== 'sets' ? ' class="on"' : ''}>재컨택 리스트</button><button data-m="sets"${mode === 'sets' ? ' class="on"' : ''}>세트 현황</button></div>` : '') + '</div>';
+  const bindM = () => document.querySelectorAll('#app [data-m]').forEach(b => b.onclick = () => { LS.set('rc-mmode', b.dataset.m); manager(p, b.dataset.m); });
+  if (mode === 'sets' && p.sets) { $('#app').innerHTML = h + '<div id="sets"></div>' + foot(); bindOut(); bindM(); setsTab(p.sets, {}); return; }
+  if (p.date !== todayKST()) h += staleNote(p.date);
+  const Y = names.filter(a => L[a].yday && L[a].yday.n);
+  if (p.date === todayKST() && Y.length) {
+    const sum = k => Y.reduce((s, a) => s + (L[a].yday[k] || 0), 0);
+    const r = (a, n, c, w, cls) => `<div class="r ${cls}"><span>${a}</span><div class="pb"><i style="width:${c ? pct(c, n) : 0}%"></i></div><span>${c}/${n}</span><span>${w || ''}</span></div>`;
+    h += `<div class="ydt"><div class="r"><span>코디</span><span>${dlab(L[Y[0]].yday.date)} '먼저' 다시 건 고객</span><span>다시 건</span><span>계약</span></div>`
+      + Y.map(a => { const y = L[a].yday; return r(E(a), y.n, y.called, y.won, y.called ? '' : 'zero'); }).join('')
+      + r('합계', sum('n'), sum('called'), sum('won'), 'tot') + '</div>'
+      + `<div class="hint">다시 건 = ${dlab(L[Y[0]].yday.date)} 리스트를 올린 뒤부터 지금까지 한 번이라도 건 고객. ${dlab(L[Y[0]].yday.date)} 저녁 통화는 녹취 기록으로 세서 조금 적게 잡힐 수 있습니다.</div>`;
+  }
+  h += '<div class="chips">' + names.map(a => `<button data-a="${E(a)}">${E(a)}<small>${(L[a].first || []).length} / ${(L[a].today || []).length} / ${(L[a].more || []).length}</small></button>`).join('')
+    + '</div><div class="hint">먼저 / 오늘 / 더 보기</div><div id="one" class="one"></div>' + foot();
+  $('#app').innerHTML = h; bindOut(); bindM();
+  // 코디를 고르면 그 코디가 보는 화면 그대로. '내 이번 달'과 지난 달 기록도 매니저가 같은 모양으로 본다
+  const pick = (a, view) => {
+    document.querySelectorAll('.chips button').forEach(b => b.classList.toggle('on', b.dataset.a === a));
+    const q = L[a], r = pickView(q, view);
+    $('#one').innerHTML = (r.tab ? segBar(r.v) : '') + (r.v === 'list' ? listView(q) : monthTab(q, r));
+    if (r.v === 'list') bind(q, $('#one'));
+    $('#one').querySelectorAll('[data-v]').forEach(b => b.onclick = e => { e.preventDefault(); pick(a, b.dataset.v); });
+  };
+  document.querySelectorAll('.chips button').forEach(b => b.onclick = () => pick(b.dataset.a));
+  if (names.length) pick(names[0]);
+}
+function bindOut() { const o = $('#out'); if (o) o.onclick = e => { e.preventDefault(); LS.del('rc-code'); login(); }; }
+
+(async () => {
+  if (window.__PREVIEW) return show(window.__PREVIEW, window.__PREVIEW_VIEW);     // 로컬 미리보기 전용 (배포 페이지에는 없다)
+  const c = LS.get('rc-code');
+  if (!c) return login();
+  try { const p = await unlock(c); p ? show(p) : (LS.del('rc-code'), login('코드가 바뀌었습니다. 새 코드를 넣어 주세요.')); }
+  catch (x) { login(x.message || '불러오지 못했습니다. 새로고침해 주세요.'); }
+})();
+</script></body></html>
